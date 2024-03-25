@@ -102,8 +102,8 @@ if ($errors) {
     exit();
 }
 
-$user = 'u67313';
-$pass = '4344635';
+$user = 'u67452';
+$pass = '7016012';
 $db = new PDO('mysql:host=localhost;dbname=u67313', $user, $pass, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
