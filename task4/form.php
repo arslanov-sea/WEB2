@@ -93,10 +93,7 @@ if (!empty($messages)) {
             <div class="form_item form-group">
                 <div class="form-check">
                     <label class="checkbox_input form-check-input" for="agree">ознакомлен(а)</label>
-                    <div>
-                        <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input">
-                    </div>
-                    
+                    <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input">
                 </div>
             </div>
         
