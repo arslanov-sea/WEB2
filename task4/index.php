@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
  
   // Складываем предыдущие значения полей в массив, если есть.
 
-s.sh, [23.04.2024 9:30]
+s.sh [23.04.2024 9:30]
 $values = array();
   $values['names'] = empty($_COOKIE['names_value']) ? '' : $_COOKIE['names_value'];
   $values['phone'] = empty($_COOKIE['phone_value']) ? '' : $_COOKIE['phone_value'];
