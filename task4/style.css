@@ -1,0 +1,11 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main-block {
+    width: 40%;
+    margin: auto;
+    background-color: #d7edeb;
+    padding: 30px;
+}
