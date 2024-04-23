@@ -46,10 +46,11 @@ if (!empty($messages)) {
             </div>
         
             <!-- Дата рождения -->
+        
             <div class="form_item form-group">
                 <label for="formDate" style="color: black;">Дата рождения:</label>
-                <input name="date" class="<?php if ($errors['date']) {print 'error';} ?> fform_input _req form-control w-50 shadow bg-white rounded"
-                value="<?php print $values['date']; ?>" />
+                <input type="date" class="<?php if ($errors['date']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded" name="date" value="<?php print $values['date']; ?>"
+                    min="1900-01-01" max="2024-03-01" id="formDate">
             </div>
         
             <!-- Пол -->
