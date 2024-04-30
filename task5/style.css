@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #8FBC8F;
+    background-color: rgb(143, 188, 143);
     position: relative;
     font-size: 14px;
     color: white;
@@ -21,7 +21,7 @@ body {
     padding: 20px;
     margin-bottom: 20px;
 
-    background-color: #20B2AA;
+    background-color: rgb(32, 178, 170);
     box-shadow: 0px 0px 15px 0px #514542;
     border-radius: 15px;
 }
