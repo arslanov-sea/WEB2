@@ -49,8 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $messages[] = '<div>Заполните имя.</div>';
     }
     if ($errors['phone']) {
+        // Удаляем куки, указывая время устаревания в прошлом.
         setcookie('phone_error', '', 100000);
-        $messages[] = '<div>Некорректный телефон.</div>';
+        setcookie('phone_value', '', 100000);
+        // Выводим сообщение.
+        $messages[] = '<div class="error">Заполните телефон.</div>';
     }
     if ($errors['email']) {
         setcookie('email_error', '', 100000);
