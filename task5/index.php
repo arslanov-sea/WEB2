@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // загрузить данные пользователя из БД
         // и заполнить переменную $values,
         // предварительно санитизовав.
-        $db = new PDO('mysql:host=localhost;dbname=u67313', 'u67313', '4344635', array(PDO::ATTR_PERSISTENT => true));
+        $db = new PDO('mysql:host=localhost;dbname=u67452', 'u67452', '7016012', array(PDO::ATTR_PERSISTENT => true));
         
         $stmt = $db->prepare("SELECT * FROM application WHERE id = ?");
         $stmt->execute([$_SESSION['uid']]);
@@ -196,7 +196,7 @@ else {
         session_start() && !empty($_SESSION['login'])) {
         // Перезаписываем данные в БД новыми данными,
         // кроме логина и пароля.
-        $db = new PDO('mysql:host=localhost;dbname=u67313', 'u67313', '4344635', array(PDO::ATTR_PERSISTENT => true));
+        $db = new PDO('mysql:host=localhost;dbname=u67452', 'u67452', '7016012', array(PDO::ATTR_PERSISTENT => true));
         
         $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, year = ?, gender = ?, bio = ? WHERE id = ?");
         $stmt->execute([$_POST['name'], $_POST['phone'], $_POST['email'], $_POST['year'], $_POST['gender'], $_POST['bio'], $_SESSION['uid']]);
@@ -224,7 +224,7 @@ else {
         setcookie('pass', $pass);
 
         // Сохранение данных формы, логина и хеш md5() пароля в базу данных.
-        $db = new PDO('mysql:host=localhost;dbname=u67313', 'u67313', '4344635', array(PDO::ATTR_PERSISTENT => true));
+        $db = new PDO('mysql:host=localhost;dbname=u67452', 'u67452', '7016012', array(PDO::ATTR_PERSISTENT => true));
 
         $stmt = $db->prepare("INSERT INTO application SET names = ?, phones = ?, email = ?, dates = ?, gender = ?, biography = ?");
         $stmt->execute([$_POST['name'], $_POST['phone'], $_POST['email'], $_POST['year'], $_POST['gender'], $_POST['bio']]);
