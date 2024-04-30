@@ -49,11 +49,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $messages[] = '<div>Заполните имя.</div>';
     }
     if ($errors['phone']) {
-        // Удаляем куки, указывая время устаревания в прошлом.
         setcookie('phone_error', '', 100000);
-        setcookie('phone_value', '', 100000);
-        // Выводим сообщение.
-        $messages[] = '<div class="error">Заполните телефон.</div>';
+        $messages[] = '<div>Некорректный телефон.</div>';
     }
     if ($errors['email']) {
         setcookie('email_error', '', 100000);
@@ -98,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // загрузить данные пользователя из БД
         // и заполнить переменную $values,
         // предварительно санитизовав.
-        $db = new PDO('mysql:host=localhost;dbname=u67452', 'u675452', '7016012', array(PDO::ATTR_PERSISTENT => true));
+        $db = new PDO('mysql:host=localhost;dbname=u67452', 'u67452', '7016012', array(PDO::ATTR_PERSISTENT => true));
         
         $stmt = $db->prepare("SELECT * FROM application WHERE id = ?");
         $stmt->execute([$_SESSION['uid']]);
