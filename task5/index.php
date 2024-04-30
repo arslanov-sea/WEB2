@@ -34,17 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
     // Складываем признак ошибок в массив.
     $errors = array();
-    $errors['names'] = !empty($_COOKIE['name_error']);
+    $errors['name'] = !empty($_COOKIE['name_error']);
     $errors['phone'] = !empty($_COOKIE['phone_error']);
     $errors['email'] = !empty($_COOKIE['email_error']);
-    $errors['data'] = !empty($_COOKIE['data_error']);
+    $errors['year'] = !empty($_COOKIE['year_error']);
     $errors['gender'] = !empty($_COOKIE['gender_error']);
-    $errors['agree'] = !empty($_COOKIE['agree_error']);
+    $errors['checkbox'] = !empty($_COOKIE['checkbox_error']);
 
     // Выдаем сообщения об ошибках.
-    if ($errors['names']) {
+    if ($errors['name']) {
         // Удаляем куку, указывая время устаревания в прошлом.
-        setcookie('names_error', '', 100000);
+        setcookie('name_error', '', 100000);
         // Выводим сообщение.
         $messages[] = '<div>Заполните имя.</div>';
     }
@@ -56,30 +56,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         setcookie('email_error', '', 100000);
         $messages[] = '<div>Некорректный email.</div>';
     }
-    if ($errors['data']) {
-        setcookie('data_error', '', 100000);
+    if ($errors['year']) {
+        setcookie('year_error', '', 100000);
         $messages[] = '<div>Выберите год рождения.</div>';
     }
     if ($errors['gender']) {
         setcookie('gender_error', '', 100000);
         $messages[] = '<div>Выберите пол.</div>';
     }
-    if ($errors['agree']) {
-        setcookie('agree_error', '', 100000);
+    if ($errors['checkbox']) {
+        setcookie('checkbox_error', '', 100000);
         $messages[] = '<div>Поставьте галочку.</div>';
     }
 
     // Складываем предыдущие значения полей в массив, если есть.
     // При этом санитизуем все данные для безопасного отображения в браузере.
     $values = array();
-$values['names'] = isset($_COOKIE['names_value']) ? strip_tags($_COOKIE['names_value']) : '';
-$values['phone'] = isset($_COOKIE['phone_value']) ? strip_tags($_COOKIE['phone_value']) : '';
-$values['email'] = isset($_COOKIE['email_value']) ? strip_tags($_COOKIE['email_value']) : '';
-$values['data'] = isset($_COOKIE['data_value']) ? $_COOKIE['data_value'] : '';
-$values['gender'] = isset($_COOKIE['gender_value']) ? $_COOKIE['gender_value'] : '';
-$values['biography'] = isset($_COOKIE['biography_value']) ? strip_tags($_COOKIE['biography_value']) : '';
-$values['agree'] = isset($_COOKIE['agree_value']) ? $_COOKIE['agree_value'] : ''; 
-if (empty($_COOKIE['language_value'])) {
+    $values['name'] = empty($_COOKIE['name_value']) ? '' : strip_tags($_COOKIE['name_value']);
+    $values['phone'] = empty($_COOKIE['phone_value']) ? '' : strip_tags($_COOKIE['phone_value']);
+    $values['email'] = empty($_COOKIE['email_value']) ? '' : strip_tags($_COOKIE['email_value']);
+    $values['year'] = empty($_COOKIE['year_value']) ? '' : $_COOKIE['year_value'];
+    $values['gender'] = empty($_COOKIE['gender_value']) ? '' : $_COOKIE['gender_value'];
+    $values['bio'] = empty($_COOKIE['bio_value']) ? '' : strip_tags($_COOKIE['bio_value']);
+    $values['checkbox'] = empty($_COOKIE['checkbox_value']) ? '' : $_COOKIE['checkbox_value']; 
+    if (empty($_COOKIE['language_value'])) {
         $values['language'] = array();
     } else {
         $values['language'] = json_decode($_COOKIE['language_value'], true);  
@@ -90,32 +90,29 @@ if (empty($_COOKIE['language_value'])) {
 
     // Если нет предыдущих ошибок ввода, есть кука сессии, начали сессию и
     // ранее в сессию записан факт успешного логина.
-    if (!empty($_SESSION['login'])) {
-    printf('Вход с логином %s, uid %d', $_SESSION['login'], $_SESSION['uid']);
-}
     session_start();
     if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login'])) {
         // загрузить данные пользователя из БД
         // и заполнить переменную $values,
         // предварительно санитизовав.
-        $db = new PDO('mysql:host=localhost;dbname=u67452', 'u67452', '7016012', array(PDO::ATTR_PERSISTENT => true));
+        $db = new PDO('mysql:host=localhost;dbname=u67313', 'u67313', '4344635', array(PDO::ATTR_PERSISTENT => true));
         
         $stmt = $db->prepare("SELECT * FROM application WHERE id = ?");
         $stmt->execute([$_SESSION['uid']]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $values['names'] = strip_tags($row['names']);
-        $values['phone'] = isset($_COOKIE['phone']) ? strip_tags($_COOKIE['phone']) : '';
+        $values['name'] = strip_tags($row['name']);
+        $values['phone'] = strip_tags($row['phone']);
         $values['email'] = strip_tags($row['email']);
-        $values['data'] = isset($_COOKIE['data']) ? $_COOKIE['data'] : '';
+        $values['year'] = $row['year'];
         $values['gender'] = $row['gender'];
-        $values['biography'] = strip_tags($row['biography']);
-        $values['agree'] = true; 
+        $values['bio'] = strip_tags($row['bio']);
+        $values['checkbox'] = true; 
 
         $stmt = $db->prepare("SELECT * FROM languages WHERE id = ?");
         $stmt->execute([$_SESSION['uid']]);
         $ability = array();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $values['language'] = isset($_COOKIE['language_value']) ? json_decode($_COOKIE['language_value'], true) : array();
+            array_push($language, strip_tags($row['name_of_language']));
         }
         $values['language'] = $language;
         
@@ -131,11 +128,11 @@ if (empty($_COOKIE['language_value'])) {
 else {
     // Проверяем ошибки.
     $errors = FALSE;
-    if (empty(htmlentities($_POST['names']))) {
-        setcookie('names_error', '1', time() + 24 * 60 * 60);
+    if (empty(htmlentities($_POST['name']))) {
+        setcookie('name_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
-        setcookie('names_value', $_POST['names'], time() + 12 * 30 * 24 * 60 * 60);
+        setcookie('name_value', $_POST['name'], time() + 12 * 30 * 24 * 60 * 60);
     }
     if (!preg_match('/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/', $_POST['phone'])) {
         setcookie('phone_error', '1', time() + 24 * 60 * 60);
@@ -149,11 +146,11 @@ else {
     } else {
         setcookie('email_value', $_POST['email'], time() + 12 * 30 * 24 * 60 * 60);
     }
-    if (empty($_POST['data'])) {
-        setcookie('data_error', '1', time() + 24 * 60 * 60);
+    if (empty($_POST['year'])) {
+        setcookie('year_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
-        setcookie('data_value', $_POST['data'], time() + 12 * 30 * 24 * 60 * 60);
+        setcookie('year_value', $_POST['year'], time() + 12 * 30 * 24 * 60 * 60);
     }
     if (empty($_POST['gender'])) {
         setcookie('gender_error', '1', time() + 24 * 60 * 60);
@@ -161,19 +158,19 @@ else {
     } else {
         setcookie('gender_value', $_POST['gender'], time() + 12 * 30 * 24 * 60 * 60);
     }
-    if (empty($_POST['agree'])) {
-        setcookie('agree_error', '1', time() + 24 * 60 * 60);
+    if (empty($_POST['checkbox'])) {
+        setcookie('checkbox_error', '1', time() + 24 * 60 * 60);
         $errors = TRUE;
     } else {
-        setcookie('agree_value', $_POST['agree'], time() + 12 * 30 * 24 * 60 * 60);
+        setcookie('checkbox_value', $_POST['checkbox'], time() + 12 * 30 * 24 * 60 * 60);
     }
     if (isset($_POST['language'])) {
         $language = $_POST['language'];
     } else {
         $language = array(); 
     }
-    if (!empty($_POST['biography'])) {
-        setcookie ('biography_value', $_POST['biography'], time() + 12 * 30 * 24 * 60 * 60);
+    if (!empty($_POST['bio'])) {
+        setcookie ('bio_value', $_POST['bio'], time() + 12 * 30 * 24 * 60 * 60);
     }
     if (!empty($_POST['language'])) {
         $json = json_encode($_POST['language']);
@@ -186,12 +183,12 @@ else {
         exit();
     } else {
         // Удаляем Cookies с признаками ошибок.
-        setcookie('names_error', '', 100000);
+        setcookie('name_error', '', 100000);
         setcookie('phone_error', '', 100000);
         setcookie('email_error', '', 100000);
-        setcookie('data_error', '', 100000);
+        setcookie('year_error', '', 100000);
         setcookie('gender_error', '', 100000);
-        setcookie('agree_error', '', 100000);
+        setcookie('checkbox_error', '', 100000);
     }
 
     // Проверяем меняются ли ранее сохраненные данные или отправляются новые.
@@ -199,10 +196,10 @@ else {
         session_start() && !empty($_SESSION['login'])) {
         // Перезаписываем данные в БД новыми данными,
         // кроме логина и пароля.
-        $db = new PDO('mysql:host=localhost;dbname=u67452', 'u67452', '7016012', array(PDO::ATTR_PERSISTENT => true));
+        $db = new PDO('mysql:host=localhost;dbname=u67313', 'u67313', '4344635', array(PDO::ATTR_PERSISTENT => true));
         
-        $stmt = $db->prepare("UPDATE application SET names = ?, phones = ?, email = ?, data = ?, gender = ?, biography = ? WHERE id = ?");
-        $stmt->execute([$_POST['names'], $_POST['phone'], $_POST['email'], $_POST['data'], $_POST['gender'], $_POST['biography'], $_SESSION['uid']]);
+        $stmt = $db->prepare("UPDATE application SET name = ?, phone = ?, email = ?, year = ?, gender = ?, bio = ? WHERE id = ?");
+        $stmt->execute([$_POST['name'], $_POST['phone'], $_POST['email'], $_POST['year'], $_POST['gender'], $_POST['bio'], $_SESSION['uid']]);
 
         $stmt = $db->prepare("DELETE FROM languages WHERE id = ?");
         $stmt->execute([$_SESSION['uid']]);
@@ -227,10 +224,10 @@ else {
         setcookie('pass', $pass);
 
         // Сохранение данных формы, логина и хеш md5() пароля в базу данных.
-        $db = new PDO('mysql:host=localhost;dbname=u67452', 'u67452', '7016012', array(PDO::ATTR_PERSISTENT => true));
+        $db = new PDO('mysql:host=localhost;dbname=u67313', 'u67313', '4344635', array(PDO::ATTR_PERSISTENT => true));
 
         $stmt = $db->prepare("INSERT INTO application SET names = ?, phones = ?, email = ?, dates = ?, gender = ?, biography = ?");
-        $stmt->execute([$_POST['names'], $_POST['phone'], $_POST['email'], $_POST['data'], $_POST['gender'], $_POST['biography']]);
+        $stmt->execute([$_POST['name'], $_POST['phone'], $_POST['email'], $_POST['year'], $_POST['gender'], $_POST['bio']]);
         
         $res = $db->query("SELECT max(id) FROM application");
         $row = $res->fetch();
