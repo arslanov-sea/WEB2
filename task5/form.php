@@ -108,5 +108,13 @@ if (!empty($messages)) {
                 <label class="col-12"><input type="submit" id="send" value="ОТПРАВИТЬ"></label>
             </div>
         </form>
+        <div class="container">
+         <?php
+           if (!empty($_COOKIE[session_name()]) && !empty($_SESSION['login']))
+             print('<a href="login.php" class = "enter-exit" title = "Log out">Выйти</a>');
+           else
+             print('<a href="login.php" class = "enter-exit"  title = "Log in">Войти</a>');
+         ?>
+      </div>
     </div>
 </body>
