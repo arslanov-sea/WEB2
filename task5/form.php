@@ -32,7 +32,8 @@ if (!empty($messages)) {
             <!-- Телефон -->
             <div class="form_item form-group">
                 <label for="formTel" style="color: black;">Телефон:</label>
-                <input type="tel" name="phone" <?php if ($errors['phone']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['phone']; ?>">
+                <input name="phone" class="<?php if ($errors['phone']) {print 'error';} ?> form_input _req form-control w-50 shadow bg-white rounded"
+                value="<?php print $values['phone']; ?>" placeholder="Введите телефон" />
             </div>
         
             <!-- E-mail -->
