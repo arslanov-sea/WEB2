@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Вход в систему</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>log in</title>
 </head>
 
 <body>
@@ -60,7 +59,7 @@ else {
 
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
   // Выдать сообщение об ошибках.
-  $db = new PDO('mysql:host=localhost;dbname=u67452', 'u67452', '7016012', array(PDO::ATTR_PERSISTENT => true));
+  $db = new PDO('mysql:host=localhost;dbname=u67419', 'u67419', '8693464', array(PDO::ATTR_PERSISTENT => true));
   $stmt = $db->prepare("SELECT id, pass FROM login_pass WHERE login = ?");
   $stmt -> execute([$_POST['login']]);
   $row = $stmt->fetch(PDO::FETCH_ASSOC);
