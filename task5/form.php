@@ -92,12 +92,7 @@ if (!empty($messages)) {
             </div>
         
             <!-- Соглашение -->
-            <div class="form_item form-group">
-                <div class="form-check">
-                    <label class="checkbox_input form-check-input" for="agree">ознакомлен(а)</label>
-                    <input id="agree" type="checkbox" name="agree" class="<?php if ($errors['agree']) {print 'error';} ?> checkbox_input form-check-input">
-                </div>
-            </div>
+            
 
             <div  <?php if ($errors['agree']) {print 'class="error"';} ?>>
                 <input type="checkbox" name="agree" <?php if ($values['agree']) {print 'checked';} ?> value="1"> С контрактом ознакомлен(a) 
