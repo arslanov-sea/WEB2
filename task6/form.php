@@ -52,7 +52,7 @@
         <option value="Scala" <?php if (in_array("Scala", $values['language'])) {print 'selected';} ?>>Scala</option>
       </select>
       <br>
-      Биография:<br><textarea class="group" name="biography" rows="3" cols="30"><?php print $values['bio']; ?></textarea>
+      Биография:<br><textarea class="group" name="biography" rows="3" cols="30"><?php print $values['biography']; ?></textarea>
       <div  <?php if ($errors['agree']) {print 'class="error"';} ?>>
         <input type="checkbox" name="agree" <?php if ($values['agree']) {print 'checked';} ?>> Согласен с условиями конфеденциальности 
       </div>
