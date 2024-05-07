@@ -100,12 +100,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $stmt = $db->prepare("SELECT * FROM application WHERE id = ?");
         $stmt->execute([$_SESSION['uid']]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $values['name'] = strip_tags($row['name']);
-        $values['phone'] = strip_tags($row['phone']);
+        $values['name'] = strip_tags($row['names']);
+        $values['phone'] = isset($_COOKIE['phone']) ? strip_tags($_COOKIE['phone']) : '';
         $values['email'] = strip_tags($row['email']);
-        $values['year'] = $row['year'];
+        $$values['data'] = isset($_COOKIE['data']) ? $_COOKIE['data'] : '';
         $values['gender'] = $row['gender'];
-        $values['bio'] = strip_tags($row['bio']);
+        $values['biography'] = strip_tags($row['biography']);
         $values['checkbox'] = true; 
 
         $stmt = $db->prepare("SELECT * FROM languages WHERE id = ?");
