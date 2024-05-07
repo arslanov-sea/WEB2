@@ -25,7 +25,7 @@
 if (empty($_SERVER['PHP_AUTH_USER']) ||
     empty($_SERVER['PHP_AUTH_PW']) ||
     $_SERVER['PHP_AUTH_USER'] != 'admin' ||
-    md5($_SERVER['PHP_AUTH_PW']) != md5('123')) {
+    md5($_SERVER['PHP_AUTH_PW']) != md5('1234')) {
     header('HTTP/1.1 401 Unauthorized');
     header('WWW-Authenticate: Basic realm="My site"');
     print('<h1>401 Требуется авторизация</h1>');
@@ -33,7 +33,7 @@ if (empty($_SERVER['PHP_AUTH_USER']) ||
 }
 
 // Подключение к базе данных и выполнение запросов
-$db = new PDO('mysql:host=localhost;dbname=u67419', 'u67419', '8693464', array(PDO::ATTR_PERSISTENT => true));
+$db = new PDO('mysql:host=localhost;dbname=u67452', 'u67452', '7016012', array(PDO::ATTR_PERSISTENT => true));
 
 // Извлечение данных пользователей
 $stmt = $db->query("SELECT * FROM application");
