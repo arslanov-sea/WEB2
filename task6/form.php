@@ -22,15 +22,15 @@
   <div class="container">
     <h2>Контактная форма</h2>
     <form action="" method="POST">
-      Имя:<br><input type="text" name="name" <?php if ($errors['name']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['name']; ?>">
+      Имя:<br><input type="text" name="names" <?php if ($errors['names']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['name']; ?>">
       <br>
       Телефон:<br><input type="tel" name="phone" <?php if ($errors['phone']) {print 'class="group error"';} else print 'class="group"'; ?> value="<?php print $values['phone']; ?>">
       <br>
       E-mail:<br><input type="text" name="email" <?php if ($errors['email']) {print 'class="group error';} else print 'class="group"'; ?> value="<?php print $values['email']; ?>">
       <br>
       <div class="form-group">
-        <legend for="year"class="group" style="color: white;">Дата рождения:</legend>
-        <input type="date" id="year" size="3" name="year" <?php if ($errors['year']) {print 'class="group error"';} else print 'class="group"';?> value="<?php print $values['year']; ?>">
+        <legend for="data"class="group" style="color: white;">Дата рождения:</legend>
+        <input type="date" id="data" size="3" name="data" <?php if ($errors['data']) {print 'class="group error"';} else print 'class="group"';?> value="<?php print $values['data']; ?>">
       </div>
       <div <?php if ($errors['gender']) {print 'class="error"';} ?>>
         Пол:<br>
@@ -52,9 +52,9 @@
         <option value="Scala" <?php if (in_array("Scala", $values['language'])) {print 'selected';} ?>>Scala</option>
       </select>
       <br>
-      Биография:<br><textarea class="group" name="bio" rows="3" cols="30"><?php print $values['bio']; ?></textarea>
-      <div  <?php if ($errors['checkbox']) {print 'class="error"';} ?>>
-        <input type="checkbox" name="checkbox" <?php if ($values['checkbox']) {print 'checked';} ?>> С контрактом ознакомлен(a) 
+      Биография:<br><textarea class="group" name="biography" rows="3" cols="30"><?php print $values['bio']; ?></textarea>
+      <div  <?php if ($errors['agree']) {print 'class="error"';} ?>>
+        <input type="checkbox" name="agree" <?php if ($values['agree']) {print 'checked';} ?>> Согласен с условиями конфеденциальности 
       </div>
       <input type="submit" id="send" value="ОТПРАВИТЬ">
     </form>
