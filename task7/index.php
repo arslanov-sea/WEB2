@@ -10,7 +10,7 @@ if (empty($_SESSION['csrf_token'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        die('Неверный CSRF-токен.');
+        die('invalid CSRF-token');
     }
 }
 
@@ -22,12 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         setcookie('login', '', time() - 3600);
         setcookie('pass', '', time() - 3600);
 
-        $messages[] = 'Спасибо, результаты сохранены.';
+        // XSS
+
+        $messages[] = 'Сохранено';
         if (!empty($_COOKIE['pass'])) {
             $messages[] = sprintf(
-                'Вы можете <a href="login.php">войти</a> с логином <strong>%s</strong> и паролем <strong>%s</strong> для изменения данных.',
-                htmlspecialchars($_COOKIE['login']),
-                htmlspecialchars($_COOKIE['pass'])
+                '<a href="login.php">войти</a> с логином <strong>%s</strong> и паролем <strong>%s</strong> для изменения данных.',
+                htmlspecialchars($_COOKIE['login']), htmlspecialchars($_COOKIE['pass'])
             );
         }
     }
@@ -101,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     if (file_exists($file)) {
         include($file);
     } else {
-        echo "Файл не найден.";
+        echo "not found";
     }
 } else {
     $errors = FALSE;
